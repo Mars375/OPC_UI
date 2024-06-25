@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cn } from "@/utils/utils";
-import { ButtonProps, buttonVariants } from "@/components/ui/button/Button";
+import { ButtonProps, buttonVariants } from "@/components/ui/Button/Button";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
 	<nav
@@ -113,6 +113,34 @@ const PaginationEllipsis = ({
 );
 PaginationEllipsis.displayName = "PaginationEllipsis";
 
+type EntriesSelectorProps = {
+	value: string;
+	onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+	options: { value: string; label: string }[];
+} & React.ComponentProps<"select">;
+
+const EntriesSelector = ({
+	value,
+	onChange,
+	className,
+	options,
+	...props
+}: EntriesSelectorProps) => (
+	<select
+		value={value}
+		onChange={onChange}
+		className={cn("border p-2 rounded-md", className)}
+		{...props}
+	>
+		{options.map((option) => (
+			<option key={option.value} value={option.value}>
+				{option.label}
+			</option>
+		))}
+	</select>
+);
+EntriesSelector.displayName = "EntriesSelector";
+
 export {
 	Pagination,
 	PaginationContent,
@@ -121,4 +149,5 @@ export {
 	PaginationLink,
 	PaginationNext,
 	PaginationPrevious,
+	EntriesSelector,
 };
