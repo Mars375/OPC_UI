@@ -1,2 +1,7 @@
 import "./index.css";
-export { DataTable } from "./DataTable/DataTable";
+
+export * from "./components/ui/button/Button";
+export * from "./components/ui/pagination/pagination";
+export * from "./components/ui/Table/Table";
+
+export { Button } from "@/components/ui/button/Button";

@@ -6,7 +6,8 @@
 		"module": "ESNext",
 		"skipLibCheck": true,
 		"paths": {
-			"opc-ui": ["./lib/main.ts"]
+			"opc-ui": ["./lib/main.ts"],
+			"@/*": ["./lib/*"]
 		},
 
 		/* Bundler mode */
