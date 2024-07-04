@@ -141,23 +141,6 @@ const EntriesSelector = ({
 );
 EntriesSelector.displayName = "EntriesSelector";
 
-type PaginationInfoProps = {
-	startItem: number;
-	endItem: number;
-	totalItems: number;
-};
-
-const PaginationInfo = ({
-	startItem,
-	endItem,
-	totalItems,
-}: PaginationInfoProps) => (
-	<span className='text-sm text-gray-500 dark:text-gray-400'>
-		Showing {startItem} to {endItem} of {totalItems} entries
-	</span>
-);
-PaginationInfo.displayName = "PaginationInfo";
-
 export {
 	Pagination,
 	PaginationContent,
@@ -167,5 +150,4 @@ export {
 	PaginationNext,
 	PaginationPrevious,
 	EntriesSelector,
-	PaginationInfo,
 };
