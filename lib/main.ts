@@ -1,7 +1,7 @@
 import "./index.css";
 
-export * from "./components/ui/Button/Button";
-export * from "./components/ui/Pagination/Pagination";
-export * from "./components/ui/Table/Table";
-
-export { Button } from "@/components/ui/Button/Button";
+export * from "./components/Button/Button";
+export * from "./components/Pagination/Pagination";
+export * from "./components/Table/Table";
+export * from "./components/DayPicker/DayPicker";
+export * from "./components/Calendar/Calendar";
