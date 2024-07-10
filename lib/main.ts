@@ -1,6 +1,6 @@
 import "./index.css";
 
-export * from "./components/ui/Popover/PopoverPimitive";
+export * from "./components/ui/Popover/Popover";
 
 export * from "./components/ui/Button/Button";
 

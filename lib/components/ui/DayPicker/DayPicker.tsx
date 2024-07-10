@@ -51,7 +51,7 @@ const DayPicker: React.FC<DayPickerProps> = ({
 			currentDate.getMonth() + monthOffset,
 			day
 		);
-		setCurrentDate(newDate); // Change the current month to the new date's month
+		setCurrentDate(newDate);
 		onDateChange(newDate);
 	};
 
@@ -59,7 +59,6 @@ const DayPicker: React.FC<DayPickerProps> = ({
 		const days = [];
 		const today = new Date();
 
-		// Days from the previous month
 		if (showOutsideDays) {
 			const prevMonthDays = startDay;
 			const prevMonth = new Date(
@@ -90,7 +89,6 @@ const DayPicker: React.FC<DayPickerProps> = ({
 			}
 		}
 
-		// Days of the current month
 		for (let day = 1; day <= daysInMonth; day++) {
 			const isSelected =
 				selectedDate &&
@@ -120,7 +118,6 @@ const DayPicker: React.FC<DayPickerProps> = ({
 			);
 		}
 
-		// Days from the next month
 		if (showOutsideDays) {
 			const nextMonthDays = 42 - days.length; // 42 = 6 weeks * 7 days
 			for (let i = 1; i <= nextMonthDays; i++) {

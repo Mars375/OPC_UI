@@ -1,6 +1,7 @@
 import * as React from "react";
 import { formatDate } from "@/utils/dateUtils";
 import { CalendarIcon } from "@/components/icons/CalendarIcon";
+
 import { cn } from "@/utils/utils";
 import { Button } from "@/components/ui/Button/Button";
 import { Calendar } from "@/components/ui/Calendar/Calendar";
@@ -8,9 +9,9 @@ import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
-} from "@/components/ui/Popover/PopoverPimitive";
+} from "@/components/ui/Popover/Popover";
 
-export function DatePicker() {
+export default function DatePicker() {
 	const [date, setDate] = React.useState<Date | null>(null);
 
 	return (

@@ -1,10 +1,10 @@
 import * as React from "react";
-import PopoverDemo from "../lib/demos/PopoverDemo/PopoverDemo";
+import DatePicker from "../lib/components/ui/DatePicker/DatePicker";
 
 const App: React.FC = () => {
 	return (
-		<div>
-			<PopoverDemo />
+		<div className='flex h-screen items-center justify-center'>
+			<DatePicker />
 		</div>
 	);
 };
