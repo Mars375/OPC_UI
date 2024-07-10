@@ -14,7 +14,7 @@ import {
 
 import { cn } from "@/utils/utils";
 
-export default function DatePicker() {
+const DatePicker: React.FC = () => {
 	const [date, setDate] = React.useState<Date | null>(null);
 	const [inputValue, setInputValue] = React.useState<string>("");
 
@@ -65,7 +65,6 @@ export default function DatePicker() {
 					value={inputValue}
 					onChange={handleInputChange}
 					className='border rounded w-full pr-10 appearance-none'
-					style={{ WebkitAppearance: "none", MozAppearance: "textfield" }}
 				/>
 				<PopoverTrigger asChild>
 					<Button
@@ -84,4 +83,8 @@ export default function DatePicker() {
 			</div>
 		</Popover>
 	);
-}
+};
+
+DatePicker.displayName = "DatePicker";
+
+export { DatePicker };

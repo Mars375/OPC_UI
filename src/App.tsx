@@ -1,8 +1,5 @@
 import * as React from "react";
-import DemoDropdown from "../demos/DemoDropdown/DemoDropdown";
-import DemoPopover from "../demos/DemoPopover/DemoPopover";
-import DemoModal from "../demos/DemoModal/DemoModal";
-import DatePicker from "../lib/components/ui/DatePicker/DatePicker";
+import { DatePicker } from "@/main";
 
 const App: React.FC = () => {
 	return (
