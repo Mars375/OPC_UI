@@ -10,8 +10,10 @@ export * from "./components/ui/Label/Label";
 export * from "./components/ui/Pagination/Pagination";
 export * from "./components/ui/Popover/Popover";
 export * from "./components/ui/Table/Table";
+export * from "./components/ui/Modal/Modal";
 
 export * from "./components/icons/CalendarIcon";
 export * from "./components/icons/CheckIcon";
 export * from "./components/icons/ChevronRightIcon";
 export * from "./components/icons/CircleIcon";
+export * from "./components/icons/CloseIcon";
