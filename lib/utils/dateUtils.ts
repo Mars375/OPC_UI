@@ -1,21 +1,37 @@
 export const formatDate = (
 	date: Date,
-	format: string = "MM/DD/YYYY"
+	format: string = "MM/DD/YYYY",
+	locale: string = "en-US"
 ): string => {
-	const pad = (n: number) => (n < 10 ? `0${n}` : n);
-
-	const day = pad(date.getDate());
-	const month = pad(date.getMonth() + 1);
-	const year = date.getFullYear();
+	const options: Intl.DateTimeFormatOptions = {};
 
 	switch (format) {
-		case "MM/DD/YYYY":
-			return `${month}/${day}/${year}`;
 		case "DD/MM/YYYY":
-			return `${day}/${month}/${year}`;
+			options.day = "2-digit";
+			options.month = "2-digit";
+			options.year = "numeric";
+			break;
+		case "MM/DD/YYYY":
+			options.month = "2-digit";
+			options.day = "2-digit";
+			options.year = "numeric";
+			break;
 		case "YYYY/MM/DD":
-			return `${year}/${month}/${day}`;
+			options.year = "numeric";
+			options.month = "2-digit";
+			options.day = "2-digit";
+			break;
+		case "HH:mm:ss":
+			options.hour = "2-digit";
+			options.minute = "2-digit";
+			options.second = "2-digit";
+			break;
 		default:
-			return `${month}/${day}/${year}`;
+			options.month = "2-digit";
+			options.day = "2-digit";
+			options.year = "numeric";
+			break;
 	}
+
+	return new Intl.DateTimeFormat(locale, options).format(date);
 };

@@ -9,18 +9,28 @@ interface DayPickerProps {
 	className?: string;
 	classNames?: { [key: string]: string };
 	showOutsideDays?: boolean;
-	selectedDate: Date | null;
-	onDateChange: (date: Date) => void;
+	selectedDates: Date[] | null;
+	onDateChange: (dates: Date[]) => void;
+	showTime?: boolean;
+	locale?: string;
+	multiSelect?: boolean;
+	showYearDropdown?: boolean;
 }
 
 const DayPicker: React.FC<DayPickerProps> = ({
 	className,
 	classNames = {},
 	showOutsideDays = true,
-	selectedDate,
+	selectedDates,
 	onDateChange,
+	showTime = false,
+	locale = "en-US",
+	multiSelect = false,
+	showYearDropdown = true,
 }) => {
 	const [currentDate, setCurrentDate] = React.useState(new Date());
+	const [yearDropdownOpen, setYearDropdownOpen] = React.useState(false);
+	const currentYearRef = React.useRef<HTMLDivElement | null>(null);
 
 	const startOfMonth = new Date(
 		currentDate.getFullYear(),
@@ -47,14 +57,52 @@ const DayPicker: React.FC<DayPickerProps> = ({
 		);
 	};
 
+	const handleYearChange = (year: number) => {
+		setCurrentDate(new Date(year, currentDate.getMonth(), 1));
+		setYearDropdownOpen(false);
+	};
+
 	const handleDateClick = (day: number, monthOffset = 0) => {
 		const newDate = new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth() + monthOffset,
 			day
 		);
+
+		let newSelectedDates = selectedDates ? [...selectedDates] : [];
+		if (multiSelect) {
+			const dateIndex = newSelectedDates.findIndex(
+				(date) =>
+					date.getDate() === newDate.getDate() &&
+					date.getMonth() === newDate.getMonth() &&
+					date.getFullYear() === newDate.getFullYear()
+			);
+			if (dateIndex >= 0) {
+				newSelectedDates.splice(dateIndex, 1);
+			} else {
+				newSelectedDates.push(newDate);
+			}
+		} else {
+			newSelectedDates = [newDate];
+		}
+
 		setCurrentDate(newDate);
-		onDateChange(newDate);
+		onDateChange(newSelectedDates);
+	};
+
+	const handleTimeChange = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		type: "hours" | "minutes"
+	) => {
+		if (selectedDates && selectedDates.length > 0) {
+			const newDate = new Date(selectedDates[0]);
+			if (type === "hours") {
+				newDate.setHours(parseInt(event.target.value, 10));
+			} else {
+				newDate.setMinutes(parseInt(event.target.value, 10));
+			}
+			onDateChange([newDate]);
+		}
 	};
 
 	const renderDays = () => {
@@ -91,73 +139,94 @@ const DayPicker: React.FC<DayPickerProps> = ({
 			}
 		}
 
-		for (let day = 1; day <= daysInMonth; day++) {
-			const isSelected =
-				selectedDate &&
-				selectedDate.getDate() === day &&
-				selectedDate.getMonth() === currentDate.getMonth() &&
-				selectedDate.getFullYear() === currentDate.getFullYear();
+		for (let i = 1; i <= daysInMonth; i++) {
+			const date = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				i
+			);
+			const isSelected = selectedDates?.some(
+				(selectedDate) =>
+					selectedDate.getDate() === date.getDate() &&
+					selectedDate.getMonth() === date.getMonth() &&
+					selectedDate.getFullYear() === date.getFullYear()
+			);
 			const isToday =
-				today.getDate() === day &&
-				today.getMonth() === currentDate.getMonth() &&
-				today.getFullYear() === currentDate.getFullYear();
+				date.getDate() === today.getDate() &&
+				date.getMonth() === today.getMonth() &&
+				date.getFullYear() === today.getFullYear();
+
 			days.push(
-				<td key={day} className={cn("p-2", classNames.cell)}>
+				<td
+					key={i}
+					className={cn(
+						"p-2",
+						classNames.cell,
+						isSelected && classNames.day_selected,
+						isToday && classNames.day_today
+					)}
+				>
 					<button
-						onClick={() => handleDateClick(day)}
-						className={cn(
-							"w-full h-full text-sm rounded-md",
-							isSelected
-								? classNames.day_selected
-								: isToday
-								? classNames.day_today
-								: classNames.day
-						)}
+						onClick={() => handleDateClick(i)}
+						className='w-full h-full text-sm'
 					>
-						{day}
+						{i}
 					</button>
 				</td>
 			);
 		}
 
-		if (showOutsideDays) {
-			const nextMonthDays = 42 - days.length; // 42 = 6 weeks * 7 days
-			for (let i = 1; i <= nextMonthDays; i++) {
-				days.push(
-					<td
-						key={`next-${i}`}
-						className={cn("p-2 text-gray-300", classNames.cell)}
-					>
-						<button
-							onClick={() => handleDateClick(i, 1)}
-							className='w-full h-full text-sm'
-						>
-							{i}
-						</button>
-					</td>
-				);
-			}
-		}
-
-		return days;
-	};
-
-	const renderWeeks = () => {
-		const days = renderDays();
-		const weeks = [];
+		const rows = [];
 		for (let i = 0; i < days.length; i += 7) {
-			weeks.push(
+			rows.push(
 				<tr key={i} className={classNames.row}>
 					{days.slice(i, i + 7)}
 				</tr>
 			);
 		}
-		return weeks;
+
+		return rows;
 	};
+
+	const renderYearOptions = () => {
+		const years = [];
+		const currentYear = currentDate.getFullYear();
+		for (let year = currentYear - 50; year <= currentYear + 50; year++) {
+			years.push(
+				<div
+					key={year}
+					ref={year === currentYear ? currentYearRef : null}
+					className={cn(
+						"p-2 cursor-pointer rounded hover:bg-gray-200 text-center",
+						classNames.dropdown_cells,
+						year === currentYear && classNames.dropdown_cells_selected
+					)}
+					onClick={() => handleYearChange(year)}
+				>
+					{year}
+				</div>
+			);
+		}
+		return years;
+	};
+
+	React.useEffect(() => {
+		if (yearDropdownOpen && currentYearRef.current) {
+			currentYearRef.current.parentElement?.scrollTo({
+				top:
+					currentYearRef.current.offsetTop -
+					currentYearRef.current.parentElement.offsetTop,
+				behavior: "auto",
+			});
+		}
+	}, [yearDropdownOpen]);
 
 	return (
 		<div
-			className={cn("p-3 bg-white text-black rounded-lg shadow-md", className)}
+			className={cn(
+				"p-3 bg-background text-foreground rounded-lg shadow-md",
+				className
+			)}
 		>
 			<div
 				className={cn(
@@ -183,8 +252,41 @@ const DayPicker: React.FC<DayPickerProps> = ({
 					</svg>
 				</button>
 				<span className={cn(classNames.caption_label)}>
-					{currentDate.toLocaleString("default", { month: "long" })}{" "}
-					{currentDate.getFullYear()}
+					{currentDate.toLocaleString(locale, { month: "long" })}{" "}
+					{showYearDropdown && (
+						<div className='relative inline-block'>
+							<button
+								onClick={() => setYearDropdownOpen(!yearDropdownOpen)}
+								className='bg-background text-foreground px-2 py-1 rounded flex items-center'
+							>
+								{currentDate.getFullYear()}
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									className={cn("h-4 w-4 ml-1 transition-transform", {
+										"rotate-180": yearDropdownOpen,
+									})}
+									viewBox='0 0 20 20'
+									fill='currentColor'
+								>
+									<path
+										fillRule='evenodd'
+										d='M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 01.02-1.06z'
+										clipRule='evenodd'
+									/>
+								</svg>
+							</button>
+							{yearDropdownOpen && (
+								<div
+									className={cn(
+										"absolute z-10 left-[-118px] mt-1 w-[17rem] border rounded shadow-lg max-h-[19rem] overflow-y-auto grid grid-cols-4 gap-1 p-2",
+										classNames.dropdown
+									)}
+								>
+									{renderYearOptions()}
+								</div>
+							)}
+						</div>
+					)}
 				</span>
 				<button
 					onClick={handleNextMonth}
@@ -211,7 +313,7 @@ const DayPicker: React.FC<DayPickerProps> = ({
 							<th
 								key={day}
 								className={cn(
-									"text-gray-500 rounded-md w-9 font-normal text-sm",
+									"text-muted-foreground rounded-md w-9 font-normal text-sm",
 									classNames.head_cell
 								)}
 							>
@@ -220,8 +322,31 @@ const DayPicker: React.FC<DayPickerProps> = ({
 						))}
 					</tr>
 				</thead>
-				<tbody>{renderWeeks()}</tbody>
+				<tbody>{renderDays()}</tbody>
 			</table>
+			{showTime && selectedDates && selectedDates.length > 0 && (
+				<div className='mt-4 flex justify-around'>
+					<div>
+						<label>Hours</label>
+						<input
+							type='number'
+							value={selectedDates[0].getHours()}
+							onChange={(e) => handleTimeChange(e, "hours")}
+							className='w-16 p-1 border rounded'
+						/>
+					</div>
+					<div>
+						<label>Minutes</label>
+
+						<input
+							type='number'
+							value={selectedDates[0].getMinutes()}
+							onChange={(e) => handleTimeChange(e, "minutes")}
+							className='w-16 p-1 border rounded'
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
