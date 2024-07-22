@@ -11,8 +11,9 @@ interface DayPickerProps {
 	onDateChange: (dates: Date[]) => void;
 	showTime?: boolean;
 	locale?: string;
-	multiSelect?: boolean;
 	showYearDropdown?: boolean;
+	minDate?: Date;
+	maxDate?: Date;
 }
 
 const DayPicker: React.FC<DayPickerProps> = ({
@@ -23,8 +24,9 @@ const DayPicker: React.FC<DayPickerProps> = ({
 	onDateChange,
 	showTime = false,
 	locale = "en-US",
-	multiSelect = false,
 	showYearDropdown = true,
+	minDate,
+	maxDate,
 }) => {
 	const [currentDate, setCurrentDate] = React.useState(new Date());
 	const [yearDropdownOpen, setYearDropdownOpen] = React.useState(false);
@@ -72,25 +74,15 @@ const DayPicker: React.FC<DayPickerProps> = ({
 			day
 		);
 
-		let newSelectedDates = selectedDates ? [...selectedDates] : [];
-		if (multiSelect) {
-			const dateIndex = newSelectedDates.findIndex(
-				(date) =>
-					date.getDate() === newDate.getDate() &&
-					date.getMonth() === newDate.getMonth() &&
-					date.getFullYear() === newDate.getFullYear()
-			);
-			if (dateIndex >= 0) {
-				newSelectedDates.splice(dateIndex, 1);
-			} else {
-				newSelectedDates.push(newDate);
-			}
-		} else {
-			newSelectedDates = [newDate];
+		if (minDate && newDate < minDate) {
+			return;
+		}
+		if (maxDate && newDate > maxDate) {
+			return;
 		}
 
 		setCurrentDate(newDate);
-		onDateChange(newSelectedDates);
+		onDateChange([newDate]);
 	};
 
 	const handleTimeChange = (
@@ -390,6 +382,4 @@ const DayPicker: React.FC<DayPickerProps> = ({
 	);
 };
 
-DayPicker.displayName = "DayPicker";
-
-export { DayPicker };
+export default DayPicker;

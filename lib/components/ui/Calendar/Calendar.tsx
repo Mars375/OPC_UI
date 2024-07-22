@@ -8,7 +8,8 @@ import { buttonVariants } from "@/main";
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
 	showTime?: boolean;
 	locale?: string;
-	multiSelect?: boolean;
+	minDate?: Date;
+	maxDate?: Date;
 };
 
 const Calendar: React.FC<CalendarProps> = ({
@@ -19,8 +20,9 @@ const Calendar: React.FC<CalendarProps> = ({
 	onDateChange,
 	showTime = false,
 	locale = "en-US",
-	multiSelect = false,
 	showYearDropdown = true,
+	minDate,
+	maxDate,
 	...props
 }: CalendarProps) => {
 	return (
@@ -31,7 +33,8 @@ const Calendar: React.FC<CalendarProps> = ({
 			showYearDropdown={showYearDropdown}
 			showTime={showTime}
 			locale={locale}
-			multiSelect={multiSelect}
+			minDate={minDate}
+			maxDate={maxDate}
 			className={cn("p-3", className)}
 			classNames={{
 				months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
@@ -76,6 +79,4 @@ const Calendar: React.FC<CalendarProps> = ({
 	);
 };
 
-Calendar.displayName = "Calendar";
-
-export { Calendar };
+export default Calendar;
