@@ -1,10 +1,6 @@
-export const formatDate = (
-	date: Date,
-	format: string = "MM/DD/YYYY",
-	locale: string = "en-US"
-): string => {
+// Ajout d'une fonction pour obtenir les options de formatage basées sur le format
+function getDateTimeFormatOptions(format: string): Intl.DateTimeFormatOptions {
 	const options: Intl.DateTimeFormatOptions = {};
-
 	switch (format) {
 		case "DD/MM/YYYY":
 			options.day = "2-digit";
@@ -32,6 +28,14 @@ export const formatDate = (
 			options.year = "numeric";
 			break;
 	}
+	return options;
+}
 
+export const formatDate = (
+	date: Date,
+	format: string = "MM/DD/YYYY",
+	locale: string = "en-US"
+): string => {
+	const options = getDateTimeFormatOptions(format);
 	return new Intl.DateTimeFormat(locale, options).format(date);
 };

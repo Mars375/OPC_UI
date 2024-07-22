@@ -1,9 +1,9 @@
 import "./index.css";
 
 export * from "./components/ui/Button/Button";
-export { default as Calendar } from "./components/ui/Calendar/Calendar";
-export { default as DatePicker } from "./components/ui/DatePicker/DatePicker";
-export { default as DayPicker } from "./components/ui/DayPicker/DayPicker";
+export * from "./components/ui/Calendar/Calendar";
+export * from "./components/ui/DatePicker/DatePicker";
+export * from "./components/ui/DayPicker/DayPicker";
 export * from "./components/ui/DropdownMenu/DropdownMenu";
 export * from "./components/ui/Input/Input";
 export * from "./components/ui/Label/Label";

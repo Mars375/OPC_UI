@@ -8,12 +8,12 @@ interface DayPickerProps {
 	classNames?: { [key: string]: string };
 	showOutsideDays?: boolean;
 	selectedDates: Date[] | null;
+	minDate?: Date;
+	maxDate?: Date;
 	onDateChange: (dates: Date[]) => void;
 	showTime?: boolean;
 	locale?: string;
 	showYearDropdown?: boolean;
-	minDate?: Date;
-	maxDate?: Date;
 }
 
 const DayPicker: React.FC<DayPickerProps> = ({
@@ -22,11 +22,11 @@ const DayPicker: React.FC<DayPickerProps> = ({
 	showOutsideDays = true,
 	selectedDates,
 	onDateChange,
+	minDate,
+	maxDate,
 	showTime = false,
 	locale = "en-US",
 	showYearDropdown = true,
-	minDate,
-	maxDate,
 }) => {
 	const [currentDate, setCurrentDate] = React.useState(new Date());
 	const [yearDropdownOpen, setYearDropdownOpen] = React.useState(false);
@@ -36,13 +36,12 @@ const DayPicker: React.FC<DayPickerProps> = ({
 		const formatter = new Intl.DateTimeFormat(locale, { weekday: "short" });
 		const days = [];
 		for (let i = 0; i < 7; i++) {
-			const day = new Date(2021, 5, i + 1); // Utilisation d'une date fixe pour obtenir les jours de la semaine
+			const day = new Date(2021, 5, i + 1);
 			days.push(
 				formatter.format(day).charAt(0).toUpperCase() +
 					formatter.format(day).slice(1)
 			);
 		}
-		// Réorganiser les jours pour commencer par lundi
 		const sunday = days.pop();
 		if (sunday) {
 			days.unshift(sunday);
@@ -67,23 +66,21 @@ const DayPicker: React.FC<DayPickerProps> = ({
 		setYearDropdownOpen(false);
 	};
 
-	const handleDateClick = (day: number, monthOffset = 0) => {
-		const newDate = new Date(
-			currentDate.getFullYear(),
-			currentDate.getMonth() + monthOffset,
-			day
-		);
-
-		if (minDate && newDate < minDate) {
-			return;
-		}
-		if (maxDate && newDate > maxDate) {
-			return;
-		}
-
-		setCurrentDate(newDate);
-		onDateChange([newDate]);
-	};
+	const handleDateClick = React.useCallback(
+		(day: number, monthOffset = 0) => {
+			const newDate = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth() + monthOffset,
+				day
+			);
+			if ((minDate && newDate < minDate) || (maxDate && newDate > maxDate)) {
+				return;
+			}
+			setCurrentDate(newDate);
+			onDateChange([newDate]);
+		},
+		[currentDate, minDate, maxDate, onDateChange]
+	);
 
 	const handleTimeChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
@@ -93,17 +90,16 @@ const DayPicker: React.FC<DayPickerProps> = ({
 			const newDate = new Date(selectedDates[0]);
 			if (type === "hours") {
 				newDate.setHours(parseInt(event.target.value, 10));
-			} else {
+			} else if (type === "minutes") {
 				newDate.setMinutes(parseInt(event.target.value, 10));
 			}
 			onDateChange([newDate]);
 		}
 	};
 
-	const renderDays = () => {
+	const renderDays = React.useMemo(() => {
 		const days = [];
 		const today = new Date();
-
 		const startOfMonth = new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -114,7 +110,7 @@ const DayPicker: React.FC<DayPickerProps> = ({
 			currentDate.getMonth() + 1,
 			0
 		);
-		const startDay = (startOfMonth.getDay() + 6) % 7; // Ajuster pour commencer par lundi
+		const startDay = (startOfMonth.getDay() + 6) % 7;
 		const daysInMonth = endOfMonth.getDate();
 
 		if (showOutsideDays) {
@@ -211,9 +207,14 @@ const DayPicker: React.FC<DayPickerProps> = ({
 				</tr>
 			);
 		}
-
 		return rows;
-	};
+	}, [
+		currentDate,
+		selectedDates,
+		showOutsideDays,
+		classNames,
+		handleDateClick,
+	]);
 
 	const renderYearOptions = () => {
 		const years = [];
@@ -268,14 +269,16 @@ const DayPicker: React.FC<DayPickerProps> = ({
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						className='h-4 w-4'
-						viewBox='0 0 24 24'
 						fill='none'
+						viewBox='0 0 24 24'
 						stroke='currentColor'
 						strokeWidth='2'
-						strokeLinecap='round'
-						strokeLinejoin='round'
 					>
-						<polyline points='15 18 9 12 15 6'></polyline>
+						<path
+							strokeLinecap='round'
+							strokeLinejoin='round'
+							d='M15 19l-7-7 7-7'
+						/>
 					</svg>
 				</button>
 				<span className={cn(classNames.caption_label)}>
@@ -326,14 +329,16 @@ const DayPicker: React.FC<DayPickerProps> = ({
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						className='h-4 w-4'
-						viewBox='0 0 24 24'
 						fill='none'
+						viewBox='0 0 24 24'
 						stroke='currentColor'
 						strokeWidth='2'
-						strokeLinecap='round'
-						strokeLinejoin='round'
 					>
-						<polyline points='9 18 15 12 9 6'></polyline>
+						<path
+							strokeLinecap='round'
+							strokeLinejoin='round'
+							d='M9 5l7 7-7 7'
+						/>
 					</svg>
 				</button>
 			</div>
@@ -353,7 +358,7 @@ const DayPicker: React.FC<DayPickerProps> = ({
 						))}
 					</tr>
 				</thead>
-				<tbody>{renderDays()}</tbody>
+				<tbody>{renderDays}</tbody>
 			</table>
 			{showTime && selectedDates && selectedDates.length > 0 && (
 				<div className='mt-4 flex justify-around'>
@@ -382,4 +387,6 @@ const DayPicker: React.FC<DayPickerProps> = ({
 	);
 };
 
-export default DayPicker;
+DayPicker.displayName = "DayPicker";
+
+export { DayPicker };
