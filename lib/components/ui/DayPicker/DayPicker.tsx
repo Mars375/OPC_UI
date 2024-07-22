@@ -3,8 +3,6 @@
 import * as React from "react";
 import { cn } from "@/utils/utils";
 
-const daysOfWeek = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-
 interface DayPickerProps {
 	className?: string;
 	classNames?: { [key: string]: string };
@@ -32,18 +30,23 @@ const DayPicker: React.FC<DayPickerProps> = ({
 	const [yearDropdownOpen, setYearDropdownOpen] = React.useState(false);
 	const currentYearRef = React.useRef<HTMLDivElement | null>(null);
 
-	const startOfMonth = new Date(
-		currentDate.getFullYear(),
-		currentDate.getMonth(),
-		1
-	);
-	const endOfMonth = new Date(
-		currentDate.getFullYear(),
-		currentDate.getMonth() + 1,
-		0
-	);
-	const startDay = (startOfMonth.getDay() + 6) % 7;
-	const daysInMonth = endOfMonth.getDate();
+	const daysOfWeek = React.useMemo(() => {
+		const formatter = new Intl.DateTimeFormat(locale, { weekday: "short" });
+		const days = [];
+		for (let i = 0; i < 7; i++) {
+			const day = new Date(2021, 5, i + 1); // Utilisation d'une date fixe pour obtenir les jours de la semaine
+			days.push(
+				formatter.format(day).charAt(0).toUpperCase() +
+					formatter.format(day).slice(1)
+			);
+		}
+		// Réorganiser les jours pour commencer par lundi
+		const sunday = days.pop();
+		if (sunday) {
+			days.unshift(sunday);
+		}
+		return days;
+	}, [locale]);
 
 	const handlePrevMonth = () => {
 		setCurrentDate(
@@ -108,6 +111,19 @@ const DayPicker: React.FC<DayPickerProps> = ({
 	const renderDays = () => {
 		const days = [];
 		const today = new Date();
+
+		const startOfMonth = new Date(
+			currentDate.getFullYear(),
+			currentDate.getMonth(),
+			1
+		);
+		const endOfMonth = new Date(
+			currentDate.getFullYear(),
+			currentDate.getMonth() + 1,
+			0
+		);
+		const startDay = (startOfMonth.getDay() + 6) % 7; // Ajuster pour commencer par lundi
+		const daysInMonth = endOfMonth.getDate();
 
 		if (showOutsideDays) {
 			const prevMonthDays = startDay;
@@ -174,6 +190,25 @@ const DayPicker: React.FC<DayPickerProps> = ({
 					</button>
 				</td>
 			);
+		}
+
+		if (showOutsideDays) {
+			const nextMonthDays = (7 - ((startDay + daysInMonth) % 7)) % 7;
+			for (let i = 1; i <= nextMonthDays; i++) {
+				days.push(
+					<td
+						key={`next-${i}`}
+						className={cn("p-2 text-gray-300", classNames.cell)}
+					>
+						<button
+							onClick={() => handleDateClick(i, 1)}
+							className='w-full h-full text-sm'
+						>
+							{i}
+						</button>
+					</td>
+				);
+			}
 		}
 
 		const rows = [];
@@ -252,7 +287,11 @@ const DayPicker: React.FC<DayPickerProps> = ({
 					</svg>
 				</button>
 				<span className={cn(classNames.caption_label)}>
-					{currentDate.toLocaleString(locale, { month: "long" })}{" "}
+					{currentDate
+						.toLocaleString(locale, { month: "long" })
+						.charAt(0)
+						.toUpperCase() +
+						currentDate.toLocaleString(locale, { month: "long" }).slice(1)}{" "}
 					{showYearDropdown && (
 						<div className='relative inline-block'>
 							<button

@@ -37,7 +37,8 @@ interface DatePickerProps {
 	};
 	multiSelect?: boolean;
 	showYearDropdown?: boolean;
-	calendarClassNames?: { [key: string]: string }; // Ajout de la prop calendarClassNames
+	calendarClassNames?: { [key: string]: string };
+	showOutsideDays?: boolean; // Added showOutsideDays prop
 }
 
 const DatePicker: React.FC<DatePickerProps> = React.memo(
@@ -60,7 +61,8 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 		customClassNames = {},
 		multiSelect = false,
 		showYearDropdown = true,
-		calendarClassNames = {}, // Ajout de la prop calendarClassNames
+		calendarClassNames = {},
+		showOutsideDays = true, // Default value for showOutsideDays
 	}) => {
 		const [date, setDate] = React.useState<Date | null>(
 			value ? new Date(value.split("/").reverse().join("-")) : null
@@ -230,6 +232,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 								multiSelect={multiSelect}
 								showYearDropdown={showYearDropdown}
 								classNames={calendarClassNames}
+								showOutsideDays={showOutsideDays} // Pass showOutsideDays prop to Calendar
 							/>
 						</PopoverContent>
 					</div>
