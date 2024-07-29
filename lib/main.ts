@@ -21,3 +21,5 @@ export * from "./components/icons/ChevronRightIcon";
 export * from "./components/icons/CircleIcon";
 export * from "./components/icons/CloseIcon";
 export * from "./components/icons/ChevronsUpDownIcon";
+
+export * from "./utils/use-toast";
