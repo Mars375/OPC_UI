@@ -21,6 +21,7 @@ interface ComboboxProps
 	onChange?: (value: string) => void;
 	error?: string;
 	value?: string;
+	className?: string;
 }
 
 const Combobox: React.FC<ComboboxProps> = ({
@@ -31,11 +32,12 @@ const Combobox: React.FC<ComboboxProps> = ({
 	onChange,
 	error,
 	value,
+	className,
 	...props
 }) => {
 	const [open, setOpen] = React.useState(false);
 	return (
-		<div {...props}>
+		<div {...props} className={cn("w-full", className)}>
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
 					<Button
@@ -45,7 +47,7 @@ const Combobox: React.FC<ComboboxProps> = ({
 						role='combobox'
 						aria-expanded={open}
 						className={cn(
-							"w-[200px] justify-between",
+							"w-full justify-between",
 							!value && "text-muted-foreground"
 						)}
 					>
@@ -57,7 +59,9 @@ const Combobox: React.FC<ComboboxProps> = ({
 						</div>
 					</Button>
 				</PopoverTrigger>
-				<PopoverContent className='w-[200px] p-0'>
+				<PopoverContent
+					className={cn("w-[var(--radix-popover-trigger-width)] p-0")}
+				>
 					<Command>
 						{includeInput && (
 							<CommandInput placeholder='Search...' id={id} name={name} />

@@ -35,6 +35,7 @@ const App: React.FC = () => {
 				onChange={handleComboboxChange}
 				error={error}
 				value={selectedValue}
+				className='w-full'
 			/>
 		</div>
 	);
