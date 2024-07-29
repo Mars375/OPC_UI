@@ -20,6 +20,7 @@ interface ComboboxProps
 	name?: string;
 	onChange?: (value: string) => void;
 	error?: string;
+	value?: string;
 }
 
 const Combobox: React.FC<ComboboxProps> = ({
@@ -29,11 +30,10 @@ const Combobox: React.FC<ComboboxProps> = ({
 	name,
 	onChange,
 	error,
+	value,
 	...props
 }) => {
 	const [open, setOpen] = React.useState(false);
-	const [value, setValue] = React.useState("");
-
 	return (
 		<div {...props}>
 			<Popover open={open} onOpenChange={setOpen}>
@@ -72,7 +72,6 @@ const Combobox: React.FC<ComboboxProps> = ({
 										key={index}
 										value={option.value}
 										onSelect={() => {
-											setValue(option.value);
 											setOpen(false);
 											onChange?.(option.value);
 										}}
