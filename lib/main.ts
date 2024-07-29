@@ -10,7 +10,7 @@ export * from "./components/ui/Label/Label";
 export * from "./components/ui/Pagination/Pagination";
 export * from "./components/ui/Popover/Popover";
 export * from "./components/ui/Table/Table";
-export * from "./components/ui/Modal/Modal";
+export * from "./components/ui/Toast/Toast";
 export * from "./components/ui/Command/Command";
 export * from "./components/ui/Combobox/Combobox";
 export * from "./components/ui/Dialog/Dialog";
