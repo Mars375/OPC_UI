@@ -24,4 +24,4 @@ export * from "./components/icons/ChevronsUpDownIcon";
 
 export * from "./utils/use-toast";
 
-export * from "./provider/Toaster";
+export * from "./provider/toaster";
