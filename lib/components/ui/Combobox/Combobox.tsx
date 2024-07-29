@@ -84,7 +84,7 @@ const Combobox: React.FC<ComboboxProps> = ({
 					</Command>
 				</PopoverContent>
 			</Popover>
-			{error && <div className='text-'>{error}</div>}
+			{error && <div className='text-destructive text-sm mt-1'>{error}</div>}
 		</div>
 	);
 };

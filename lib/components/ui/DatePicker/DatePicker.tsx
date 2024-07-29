@@ -238,7 +238,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 							disabled={disabled}
 							className={cn(
 								"border rounded w-full pr-10 appearance-none",
-								(error || futureDateError) && "border-red-500",
+								(error || futureDateError) && "border-destructive",
 								customClassNames.input
 							)}
 							aria-invalid={!!(error || futureDateError)}
@@ -252,7 +252,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 								className={cn(
 									"absolute right-0 p-3 bg-accent rounded rounded-l-none hover:bg-accent/80",
 									!date && "text-muted-foreground",
-									(error || futureDateError) && "border-red-500 border-l-0",
+									(error || futureDateError) && "border-destructive border-l-0",
 									customClassNames.button
 								)}
 								disabled={disabled}
@@ -276,7 +276,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 						</PopoverContent>
 					</div>
 					{(error || futureDateError) && (
-						<p id={`${id}-error`} className='text-red-500 text-sm mt-1'>
+						<p id={`${id}-error`} className='text-destructive text-sm mt-1'>
 							{error || futureDateError}
 						</p>
 					)}

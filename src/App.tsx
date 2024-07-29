@@ -34,6 +34,7 @@ const App: React.FC = () => {
 				name='department'
 				onChange={handleComboboxChange}
 				error={error}
+				value={selectedValue}
 			/>
 		</div>
 	);
