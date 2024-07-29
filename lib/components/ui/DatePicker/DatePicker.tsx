@@ -218,10 +218,18 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 		);
 
 		React.useEffect(() => {
-			if (date) {
-				setInputValue(formatDate(date, dateFormat, locale));
+			if (value === "" || value === null) {
+				setDate(null);
+				setInputValue("");
+				setFutureDateError(null);
+			} else if (value) {
+				const newDate = new Date(value.split("/").reverse().join("-"));
+				if (!isNaN(newDate.getTime())) {
+					setDate(newDate);
+					setInputValue(formatDate(newDate, dateFormat, locale));
+				}
 			}
-		}, [date, dateFormat, locale]);
+		}, [value, dateFormat, locale]);
 
 		return (
 			<div className={className}>
