@@ -7,69 +7,86 @@ import {
 	CommandGroup,
 	CommandItem,
 	CommandList,
-	CommandInput, // Assurez-vous d'importer CommandInput
+	CommandInput,
 } from "@/main";
 import { Popover, PopoverContent, PopoverTrigger } from "@/main";
 import { ChevronsUpDownIcon } from "@/main";
 
-interface ComboboxProps {
+interface ComboboxProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
 	options: { value: string; label: string }[];
 	includeInput?: boolean;
+	id?: string;
+	name?: string;
+	onChange?: (value: string) => void;
+	error?: string;
 }
 
 const Combobox: React.FC<ComboboxProps> = ({
 	options,
 	includeInput = false,
+	id,
+	name,
+	onChange,
+	error,
+	...props
 }) => {
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState("");
 
 	return (
-		<Popover open={open} onOpenChange={setOpen}>
-			<PopoverTrigger asChild>
-				<Button
-					variant='outline'
-					role='combobox'
-					aria-expanded={open}
-					className={cn(
-						"w-[200px] justify-between",
-						!value && "text-muted-foreground"
-					)}
-				>
-					{value
-						? options.find((option) => option.value === value)?.label
-						: "Select Option"}
-					<div className='ml-2 h-4 w-4 shrink-0 opacity-50'>
-						<ChevronsUpDownIcon />
-					</div>
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent className='w-[200px] p-0'>
-				<Command>
-					{includeInput && <CommandInput placeholder='Search...' />}
-					<CommandList>
-						{options.length === 0 && (
-							<CommandEmpty>No options found.</CommandEmpty>
+		<div {...props}>
+			<Popover open={open} onOpenChange={setOpen}>
+				<PopoverTrigger asChild>
+					<Button
+						id={id}
+						name={name}
+						variant='outline'
+						role='combobox'
+						aria-expanded={open}
+						className={cn(
+							"w-[200px] justify-between",
+							!value && "text-muted-foreground"
 						)}
-						<CommandGroup>
-							{options.map((option, index) => (
-								<CommandItem
-									key={index}
-									value={option.value}
-									onSelect={() => {
-										console.log("onSelect triggered:", option.label);
-										setValue(option.value);
-										setOpen(false);
-									}}
-								>
-									{option.label}
-								</CommandItem>
-							))}
-						</CommandGroup>
-					</CommandList>
-				</Command>
-			</PopoverContent>
-		</Popover>
+					>
+						{value
+							? options.find((option) => option.value === value)?.label
+							: "Select Option"}
+						<div className='ml-2 h-4 w-4 shrink-0 opacity-50'>
+							<ChevronsUpDownIcon />
+						</div>
+					</Button>
+				</PopoverTrigger>
+				<PopoverContent className='w-[200px] p-0'>
+					<Command>
+						{includeInput && (
+							<CommandInput placeholder='Search...' id={id} name={name} />
+						)}
+						<CommandList>
+							{options.length === 0 && (
+								<CommandEmpty>No options found.</CommandEmpty>
+							)}
+							<CommandGroup>
+								{options.map((option, index) => (
+									<CommandItem
+										key={index}
+										value={option.value}
+										onSelect={() => {
+											setValue(option.value);
+											setOpen(false);
+											onChange?.(option.value);
+										}}
+									>
+										{option.label}
+									</CommandItem>
+								))}
+							</CommandGroup>
+						</CommandList>
+					</Command>
+				</PopoverContent>
+			</Popover>
+			{error && <div className='text-'>{error}</div>}
+		</div>
 	);
 };
 
