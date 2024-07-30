@@ -50,6 +50,7 @@ const Combobox: React.FC<ComboboxProps> = ({
 							"w-full justify-between",
 							!value && "text-muted-foreground"
 						)}
+						data-testid={id}
 					>
 						{value
 							? options.find((option) => option.value === value)?.label
