@@ -11,6 +11,7 @@ Welcome to the OPC React UI component library. This library contains various reu
   - [Popover](#popover)
   - [Table](#table)
   - [Toast](#toast)
+- [Storybook](#storybook)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -177,9 +178,99 @@ return (
 }
 ```
 
+## Storybook
+
+We use Storybook for developing and testing our components in isolation. Storybook provides a great way to visualize and interact with your components.
+
+### Running Storybook
+
+To start Storybook, run the following command:
+
+```bash
+npm run storybook
+```
+
+or
+
+```bash
+yarn storybook
+```
+
+This will start a local server and open Storybook in your default web browser. You can then navigate through the different stories to see the components in action.
+
+### Building Storybook
+
+To build a static version of Storybook for deployment, run:
+
+```bash
+npm run build-storybook
+```
+
+or
+
+```bash
+yarn build-storybook
+```
+
+This will generate a static Storybook site in the `storybook-static` directory, which you can then deploy to any static site hosting service.
+
+This will generate a static Storybook site in the `storybook-static` directory, which you can then deploy to any static site hosting service.
+
 ## Contributing
 
 Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information on how to contribute.
+
+### Cloning the Repository
+
+If you want to clone the repository to modify or add new features, follow these steps:
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/opc-react-ui.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd opc-react-ui
+```
+
+3. Install the dependencies:
+
+```bash
+npm install
+```
+
+or
+
+```bash
+yarn install
+```
+
+4. Start the development server:
+
+```bash
+npm run start
+```
+
+or
+
+```bash
+yarn start
+```
+
+5. Open Storybook to develop and test components:
+
+```bash
+npm run storybook
+```
+
+or
+
+```bash
+yarn storybook
+```
 
 ## License
 
