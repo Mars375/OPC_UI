@@ -5,11 +5,16 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { cn } from "@/utils/utils";
 
+/**
+ * CloseIcon component.
+ * Renders an SVG icon for the close button.
+ * @returns {JSX.Element} - JSX element for the close icon.
+ */
 const CloseIcon = () => (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
+		width='16'
+		height='16'
 		viewBox='0 0 24 24'
 		fill='none'
 		stroke='currentColor'
@@ -22,14 +27,36 @@ const CloseIcon = () => (
 	</svg>
 );
 
+/**
+ * Dialog component.
+ * Root component for the dialog.
+ */
 const Dialog = DialogPrimitive.Root;
 
+/**
+ * DialogTrigger component.
+ * Component to trigger the opening of the dialog.
+ */
 const DialogTrigger = DialogPrimitive.Trigger;
 
+/**
+ * DialogPortal component.
+ * Portal component for rendering the dialog outside the DOM hierarchy.
+ */
 const DialogPortal = DialogPrimitive.Portal;
 
+/**
+ * DialogClose component.
+ * Component to close the dialog.
+ */
 const DialogClose = DialogPrimitive.Close;
 
+/**
+ * DialogOverlay component.
+ * Renders the overlay behind the dialog.
+ * @param {Object} props - Properties for the DialogOverlay component.
+ * @returns {JSX.Element} - JSX element for the dialog overlay.
+ */
 const DialogOverlay = React.forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Overlay>,
 	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
@@ -37,7 +64,7 @@ const DialogOverlay = React.forwardRef<
 	<DialogPrimitive.Overlay
 		ref={ref}
 		className={cn(
-			"fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+			"fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
 			className
 		)}
 		{...props}
@@ -45,6 +72,12 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
+/**
+ * DialogContent component.
+ * Renders the content of the dialog.
+ * @param {Object} props - Properties for the DialogContent component.
+ * @returns {JSX.Element} - JSX element for the dialog content.
+ */
 const DialogContent = React.forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Content>,
 	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
@@ -71,6 +104,12 @@ const DialogContent = React.forwardRef<
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
+/**
+ * DialogHeader component.
+ * Renders the header of the dialog.
+ * @param {Object} props - Properties for the DialogHeader component.
+ * @returns {JSX.Element} - JSX element for the dialog header.
+ */
 const DialogHeader = ({
 	className,
 	...props
@@ -85,6 +124,12 @@ const DialogHeader = ({
 );
 DialogHeader.displayName = "DialogHeader";
 
+/**
+ * DialogFooter component.
+ * Renders the footer of the dialog.
+ * @param {Object} props - Properties for the DialogFooter component.
+ * @returns {JSX.Element} - JSX element for the dialog footer.
+ */
 const DialogFooter = ({
 	className,
 	...props
@@ -99,6 +144,12 @@ const DialogFooter = ({
 );
 DialogFooter.displayName = "DialogFooter";
 
+/**
+ * DialogTitle component.
+ * Renders the title of the dialog.
+ * @param {Object} props - Properties for the DialogTitle component.
+ * @returns {JSX.Element} - JSX element for the dialog title.
+ */
 const DialogTitle = React.forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Title>,
 	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
@@ -114,6 +165,12 @@ const DialogTitle = React.forwardRef<
 ));
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
+/**
+ * DialogDescription component.
+ * Renders the description of the dialog.
+ * @param {Object} props - Properties for the DialogDescription component.
+ * @returns {JSX.Element} - JSX element for the dialog description.
+ */
 const DialogDescription = React.forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Description>,
 	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>

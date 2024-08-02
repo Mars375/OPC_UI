@@ -3,7 +3,7 @@
 import * as React from "react";
 import { cn } from "@/utils/utils";
 
-interface DayPickerProps {
+export interface DayPickerProps {
 	className?: string;
 	classNames?: { [key: string]: string };
 	showOutsideDays?: boolean;
@@ -312,7 +312,7 @@ const DayPicker: React.FC<DayPickerProps> = ({
 							{yearDropdownOpen && (
 								<div
 									className={cn(
-										"absolute z-10 left-[-118px] mt-1 w-[17rem] border rounded shadow-lg max-h-[19rem] overflow-y-auto grid grid-cols-4 gap-1 p-2",
+										"absolute z-10 left-[-118px] mt-1 w-[17rem] border rounded shadow-lg max-h-[19rem] overflow-y-auto grid grid-cols-4 gap-1 p-2 ",
 										classNames.dropdown
 									)}
 								>

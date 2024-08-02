@@ -3,15 +3,20 @@ import type { StorybookConfig } from "@storybook/react-vite";
 const config: StorybookConfig = {
 	stories: ["../lib/**/*.mdx", "../lib/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
 	addons: [
-		"@storybook/addon-onboarding",
-		"@storybook/addon-links",
-		"@storybook/addon-essentials",
-		"@chromatic-com/storybook",
-		"@storybook/addon-interactions",
-	],
+        "@storybook/addon-onboarding",
+        "@storybook/addon-links",
+        "@storybook/addon-essentials",
+        "@chromatic-com/storybook",
+        "@storybook/addon-interactions",
+        "@storybook/addon-themes",
+        "@storybook/addon-styling-webpack"
+    ],
 	framework: {
 		name: "@storybook/react-vite",
 		options: {},
+	},
+	core: {
+		builder: "@storybook/builder-vite",
 	},
 };
 export default config;

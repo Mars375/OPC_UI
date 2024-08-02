@@ -6,18 +6,41 @@ import { CheckIcon, ChevronRightIcon, CircleIcon } from "@/main";
 
 import { cn } from "@/utils/utils";
 
+/**
+ * Root component for the dropdown menu.
+ */
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
+/**
+ * Component to trigger the opening of the dropdown menu.
+ */
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 
+/**
+ * Group component for grouping dropdown menu items.
+ */
 const DropdownMenuGroup = DropdownMenuPrimitive.Group;
 
+/**
+ * Portal component for rendering the dropdown menu outside the DOM hierarchy.
+ */
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal;
 
+/**
+ * Submenu component for the dropdown menu.
+ */
 const DropdownMenuSub = DropdownMenuPrimitive.Sub;
 
+/**
+ * Radio group component for the dropdown menu.
+ */
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
+/**
+ * SubTrigger component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuSubTrigger component.
+ * @returns {JSX.Element} - JSX element for the submenu trigger.
+ */
 const DropdownMenuSubTrigger = React.forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
@@ -40,6 +63,11 @@ const DropdownMenuSubTrigger = React.forwardRef<
 DropdownMenuSubTrigger.displayName =
 	DropdownMenuPrimitive.SubTrigger.displayName;
 
+/**
+ * SubContent component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuSubContent component.
+ * @returns {JSX.Element} - JSX element for the submenu content.
+ */
 const DropdownMenuSubContent = React.forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
@@ -56,6 +84,11 @@ const DropdownMenuSubContent = React.forwardRef<
 DropdownMenuSubContent.displayName =
 	DropdownMenuPrimitive.SubContent.displayName;
 
+/**
+ * Content component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuContent component.
+ * @returns {JSX.Element} - JSX element for the dropdown menu content.
+ */
 const DropdownMenuContent = React.forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.Content>,
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
@@ -74,6 +107,11 @@ const DropdownMenuContent = React.forwardRef<
 ));
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
+/**
+ * Item component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuItem component.
+ * @returns {JSX.Element} - JSX element for the dropdown menu item.
+ */
 const DropdownMenuItem = React.forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.Item>,
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
@@ -92,6 +130,11 @@ const DropdownMenuItem = React.forwardRef<
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
+/**
+ * CheckboxItem component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuCheckboxItem component.
+ * @returns {JSX.Element} - JSX element for the checkbox item.
+ */
 const DropdownMenuCheckboxItem = React.forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
@@ -116,6 +159,11 @@ const DropdownMenuCheckboxItem = React.forwardRef<
 DropdownMenuCheckboxItem.displayName =
 	DropdownMenuPrimitive.CheckboxItem.displayName;
 
+/**
+ * RadioItem component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuRadioItem component.
+ * @returns {JSX.Element} - JSX element for the radio item.
+ */
 const DropdownMenuRadioItem = React.forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
@@ -138,6 +186,11 @@ const DropdownMenuRadioItem = React.forwardRef<
 ));
 DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;
 
+/**
+ * Label component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuLabel component.
+ * @returns {JSX.Element} - JSX element for the dropdown menu label.
+ */
 const DropdownMenuLabel = React.forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.Label>,
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
@@ -156,6 +209,11 @@ const DropdownMenuLabel = React.forwardRef<
 ));
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
+/**
+ * Separator component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuSeparator component.
+ * @returns {JSX.Element} - JSX element for the dropdown menu separator.
+ */
 const DropdownMenuSeparator = React.forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
@@ -168,6 +226,11 @@ const DropdownMenuSeparator = React.forwardRef<
 ));
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 
+/**
+ * Shortcut component for the dropdown menu.
+ * @param {Object} props - Properties for the DropdownMenuShortcut component.
+ * @returns {JSX.Element} - JSX element for the dropdown menu shortcut.
+ */
 const DropdownMenuShortcut = ({
 	className,
 	...props

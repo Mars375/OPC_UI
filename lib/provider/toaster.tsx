@@ -10,6 +10,11 @@ import {
 } from "@/components/ui/Toast/Toast";
 import { useToast } from "@/utils/use-toast";
 
+/**
+ * Toaster component.
+ * Renders a list of toasts using the ToastProvider.
+ * @returns {JSX.Element} - JSX element for the toaster.
+ */
 export function Toaster() {
 	const { toasts } = useToast();
 

@@ -12,7 +12,18 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/main";
 import { ChevronsUpDownIcon } from "@/main";
 
-interface ComboboxProps
+/**
+ * Props for the Combobox component.
+ * @property {Array<{ value: string; label: string }>} options - List of options for the combobox.
+ * @property {boolean} [includeInput] - Whether to include an input field for searching.
+ * @property {string} [id] - ID for the combobox.
+ * @property {string} [name] - Name for the combobox.
+ * @property {(value: string) => void} [onChange] - Callback function when the selected value changes.
+ * @property {string} [error] - Error message to display.
+ * @property {string} [value] - Selected value.
+ * @property {string} [className] - Additional class names for the combobox.
+ */
+export interface ComboboxProps
 	extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
 	options: { value: string; label: string }[];
 	includeInput?: boolean;
@@ -24,6 +35,12 @@ interface ComboboxProps
 	className?: string;
 }
 
+/**
+ * Combobox component.
+ * Renders a combobox with optional input field and error message.
+ * @param {ComboboxProps} props - Properties for the Combobox component.
+ * @returns {JSX.Element} - JSX element for the combobox.
+ */
 const Combobox: React.FC<ComboboxProps> = ({
 	options,
 	includeInput = false,
@@ -31,11 +48,29 @@ const Combobox: React.FC<ComboboxProps> = ({
 	name,
 	onChange,
 	error,
-	value,
+	value: propValue,
 	className,
 	...props
 }) => {
 	const [open, setOpen] = React.useState(false);
+	const [value, setValue] = React.useState(propValue || "");
+
+	/**
+	 * Handles the selection of an option.
+	 * @param {string} selectedValue - The selected value.
+	 */
+	const handleSelect = (selectedValue: string) => {
+		setValue(selectedValue);
+		setOpen(false);
+		if (onChange) {
+			onChange(selectedValue);
+		}
+	};
+
+	React.useEffect(() => {
+		setValue(propValue || "");
+	}, [propValue]);
+
 	return (
 		<div {...props} className={cn("w-full", className)}>
 			<Popover open={open} onOpenChange={setOpen}>
@@ -76,10 +111,7 @@ const Combobox: React.FC<ComboboxProps> = ({
 									<CommandItem
 										key={index}
 										value={option.value}
-										onSelect={() => {
-											setOpen(false);
-											onChange?.(option.value);
-										}}
+										onSelect={() => handleSelect(option.value)}
 									>
 										{option.label}
 									</CommandItem>

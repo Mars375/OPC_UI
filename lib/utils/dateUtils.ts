@@ -1,4 +1,8 @@
-// Ajout d'une fonction pour obtenir les options de formatage basées sur le format
+/**
+ * Gets the formatting options based on the given format.
+ * @param {string} format - The desired date/time format.
+ * @returns {Intl.DateTimeFormatOptions} - The formatting options for Intl.DateTimeFormat.
+ */
 function getDateTimeFormatOptions(format: string): Intl.DateTimeFormatOptions {
 	const options: Intl.DateTimeFormatOptions = {};
 	switch (format) {
@@ -31,6 +35,13 @@ function getDateTimeFormatOptions(format: string): Intl.DateTimeFormatOptions {
 	return options;
 }
 
+/**
+ * Formats a date according to the specified format and locale.
+ * @param {Date} date - The date to format.
+ * @param {string} [format="MM/DD/YYYY"] - The desired date format.
+ * @param {string} [locale="en-US"] - The locale to use for formatting.
+ * @returns {string} - The formatted date.
+ */
 export const formatDate = (
 	date: Date,
 	format: string = "MM/DD/YYYY",

@@ -7,6 +7,11 @@ import { Command as CommandPrimitive } from "cmdk";
 import { cn } from "@/utils/utils";
 import { Dialog, DialogContent } from "@/components/ui/Dialog/Dialog";
 
+/**
+ * SearchIcon component.
+ * Renders an SVG icon for the search functionality.
+ * @returns {JSX.Element} - JSX element for the search icon.
+ */
 const SearchIcon = () => (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
@@ -25,6 +30,13 @@ const SearchIcon = () => (
 	</svg>
 );
 
+/**
+ * Command component.
+ * A wrapper around the CommandPrimitive component with additional styling.
+ * @param {React.ComponentPropsWithoutRef<typeof CommandPrimitive>} props - Properties for the Command component.
+ * @param {React.Ref<typeof CommandPrimitive>} ref - Reference for the Command component.
+ * @returns {JSX.Element} - JSX element for the Command component.
+ */
 const Command = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive>
@@ -40,8 +52,17 @@ const Command = React.forwardRef<
 ));
 Command.displayName = CommandPrimitive.displayName;
 
+/**
+ * Props for the CommandDialog component.
+ */
 interface CommandDialogProps extends DialogProps {}
 
+/**
+ * CommandDialog component.
+ * Renders a dialog containing the Command component.
+ * @param {CommandDialogProps} props - Properties for the CommandDialog component.
+ * @returns {JSX.Element} - JSX element for the CommandDialog component.
+ */
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
 	return (
 		<Dialog {...props}>
@@ -54,6 +75,13 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
 	);
 };
 
+/**
+ * CommandInput component.
+ * A wrapper around the CommandPrimitive.Input component with additional styling.
+ * @param {React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>} props - Properties for the CommandInput component.
+ * @param {React.Ref<typeof CommandPrimitive.Input>} ref - Reference for the CommandInput component.
+ * @returns {JSX.Element} - JSX element for the CommandInput component.
+ */
 const CommandInput = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Input>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
@@ -75,6 +103,13 @@ const CommandInput = React.forwardRef<
 
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
+/**
+ * CommandList component.
+ * A wrapper around the CommandPrimitive.List component with additional styling.
+ * @param {React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>} props - Properties for the CommandList component.
+ * @param {React.Ref<typeof CommandPrimitive.List>} ref - Reference for the CommandList component.
+ * @returns {JSX.Element} - JSX element for the CommandList component.
+ */
 const CommandList = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.List>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
@@ -88,6 +123,13 @@ const CommandList = React.forwardRef<
 
 CommandList.displayName = CommandPrimitive.List.displayName;
 
+/**
+ * CommandEmpty component.
+ * A wrapper around the CommandPrimitive.Empty component with additional styling.
+ * @param {React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>} props - Properties for the CommandEmpty component.
+ * @param {React.Ref<typeof CommandPrimitive.Empty>} ref - Reference for the CommandEmpty component.
+ * @returns {JSX.Element} - JSX element for the CommandEmpty component.
+ */
 const CommandEmpty = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Empty>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
@@ -101,6 +143,13 @@ const CommandEmpty = React.forwardRef<
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
 
+/**
+ * CommandGroup component.
+ * A wrapper around the CommandPrimitive.Group component with additional styling.
+ * @param {React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>} props - Properties for the CommandGroup component.
+ * @param {React.Ref<typeof CommandPrimitive.Group>} ref - Reference for the CommandGroup component.
+ * @returns {JSX.Element} - JSX element for the CommandGroup component.
+ */
 const CommandGroup = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Group>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
@@ -117,6 +166,13 @@ const CommandGroup = React.forwardRef<
 
 CommandGroup.displayName = CommandPrimitive.Group.displayName;
 
+/**
+ * CommandSeparator component.
+ * A wrapper around the CommandPrimitive.Separator component with additional styling.
+ * @param {React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>} props - Properties for the CommandSeparator component.
+ * @param {React.Ref<typeof CommandPrimitive.Separator>} ref - Reference for the CommandSeparator component.
+ * @returns {JSX.Element} - JSX element for the CommandSeparator component.
+ */
 const CommandSeparator = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Separator>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
@@ -129,6 +185,13 @@ const CommandSeparator = React.forwardRef<
 ));
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 
+/**
+ * CommandItem component.
+ * A wrapper around the CommandPrimitive.Item component with additional styling.
+ * @param {React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>} props - Properties for the CommandItem component.
+ * @param {React.Ref<typeof CommandPrimitive.Item>} ref - Reference for the CommandItem component.
+ * @returns {JSX.Element} - JSX element for the CommandItem component.
+ */
 const CommandItem = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Item>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
@@ -145,6 +208,12 @@ const CommandItem = React.forwardRef<
 
 CommandItem.displayName = CommandPrimitive.Item.displayName;
 
+/**
+ * CommandShortcut component.
+ * Renders a span element for displaying keyboard shortcuts.
+ * @param {React.HTMLAttributes<HTMLSpanElement>} props - Properties for the CommandShortcut component.
+ * @returns {JSX.Element} - JSX element for the CommandShortcut component.
+ */
 const CommandShortcut = ({
 	className,
 	...props

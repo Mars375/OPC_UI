@@ -14,7 +14,29 @@ import {
 
 import { cn } from "@/utils/utils";
 
-interface DatePickerProps {
+/**
+ * Props for the DatePicker component.
+ * @property {string | null} [value] - The selected date value.
+ * @property {(date: string | null) => void} [onChange] - Callback function when the date changes.
+ * @property {string} [id] - ID for the date picker input.
+ * @property {string} [placeholder] - Placeholder text for the input.
+ * @property {string} [className] - Additional class names for the date picker.
+ * @property {string} [error] - Error message to display.
+ * @property {boolean} [disableFutureDates] - Whether to disable future dates.
+ * @property {Date} [minDate] - Minimum selectable date.
+ * @property {Date} [maxDate] - Maximum selectable date.
+ * @property {boolean} [disabled] - Whether the date picker is disabled.
+ * @property {string} [locale] - Locale for date formatting.
+ * @property {string} [dateFormat] - Date format string.
+ * @property {boolean} [showTime] - Whether to show time selection.
+ * @property {(event: React.FocusEvent<HTMLInputElement>) => void} [onBlur] - Callback function when the input loses focus.
+ * @property {(event: React.FocusEvent<HTMLInputElement>) => void} [onFocus] - Callback function when the input gains focus.
+ * @property {Object} [customClassNames] - Custom class names for various elements.
+ * @property {boolean} [showYearDropdown] - Whether to show the year dropdown in the calendar.
+ * @property {Object} [calendarClassNames] - Custom class names for the calendar.
+ * @property {boolean} [showOutsideDays] - Whether to show days outside the current month.
+ */
+export interface DatePickerProps {
 	value?: string | null;
 	onChange?: (date: string | null) => void;
 	id?: string;
@@ -40,6 +62,12 @@ interface DatePickerProps {
 	showOutsideDays?: boolean;
 }
 
+/**
+ * DatePicker component.
+ * Renders a date picker with optional time selection and error handling.
+ * @param {DatePickerProps} props - Properties for the DatePicker component.
+ * @returns {JSX.Element} - JSX element for the date picker.
+ */
 const DatePicker: React.FC<DatePickerProps> = React.memo(
 	({
 		value = null,
@@ -62,19 +90,28 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 		calendarClassNames = {},
 		showOutsideDays = true,
 	}) => {
+		// State to manage the selected date
 		const [date, setDate] = React.useState<Date | null>(
 			value ? new Date(value.split("/").reverse().join("-")) : null
 		);
+		// State to manage the input value
 		const [inputValue, setInputValue] = React.useState<string>(value || "");
+		// State to manage future date error
 		const [futureDateError, setFutureDateError] = React.useState<string | null>(
 			null
 		);
 
+		/**
+		 * Handles input change and updates the date value.
+		 * @param {React.ChangeEvent<HTMLInputElement>} event - The input change event.
+		 */
 		const handleInputChange = React.useCallback(
 			(event: React.ChangeEvent<HTMLInputElement>) => {
 				let value = event.target.value;
+				// Remove non-numeric characters
 				value = value.replace(/\D/g, "");
 
+				// Format the input value as DD/MM/YYYY
 				if (value.length <= 2) {
 					setInputValue(value);
 				} else if (value.length <= 4) {
@@ -85,6 +122,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 					);
 				}
 
+				// Parse the date if the input length is 8 (DDMMYYYY)
 				if (value.length === 8) {
 					const [day, month, year] = [
 						value.slice(0, 2),
@@ -93,6 +131,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 					].map(Number);
 					const parsedDate = new Date(year, month - 1, day);
 					if (!isNaN(parsedDate.getTime())) {
+						// Check for future date
 						if (disableFutureDates && parsedDate > new Date()) {
 							setInputValue("");
 							setFutureDateError("Date cannot be in the future.");
@@ -108,6 +147,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 									minDate.getDate()
 								)
 						) {
+							// Check for date before minDate
 							setInputValue("");
 							setFutureDateError(
 								`Date cannot be before ${formatDate(
@@ -128,6 +168,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 									maxDate.getDate()
 								)
 						) {
+							// Check for date after maxDate
 							setInputValue("");
 							setFutureDateError(
 								`Date cannot be after ${formatDate(
@@ -140,6 +181,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 								onChange(null);
 							}
 						} else {
+							// Set the date if all checks pass
 							setDate(parsedDate);
 							const formattedDate = formatDate(parsedDate, dateFormat, locale);
 							setFutureDateError(null);
@@ -153,6 +195,10 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 			[disableFutureDates, minDate, maxDate, onChange, dateFormat, locale]
 		);
 
+		/**
+		 * Handles date change from the calendar component.
+		 * @param {Date[]} newDates - The new selected dates.
+		 */
 		const handleDateChange = React.useCallback(
 			(newDates: Date[]) => {
 				if (newDates.length === 0) {
@@ -166,6 +212,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 				}
 
 				const newDate = newDates[0];
+				// Check for future date
 				if (disableFutureDates && newDate > new Date()) {
 					setInputValue("");
 					setFutureDateError("Date cannot be in the future.");
@@ -181,6 +228,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 							minDate.getDate()
 						)
 				) {
+					// Check for date before minDate
 					setInputValue("");
 					setFutureDateError(
 						`Date cannot be before ${formatDate(minDate, dateFormat, locale)}.`
@@ -197,6 +245,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 							maxDate.getDate()
 						)
 				) {
+					// Check for date after maxDate
 					setInputValue("");
 					setFutureDateError(
 						`Date cannot be after ${formatDate(maxDate, dateFormat, locale)}.`
@@ -205,6 +254,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 						onChange(null);
 					}
 				} else {
+					// Set the date if all checks pass
 					setDate(newDate);
 					const formattedDate = formatDate(newDate, dateFormat, locale);
 					setInputValue(formattedDate);
@@ -217,6 +267,7 @@ const DatePicker: React.FC<DatePickerProps> = React.memo(
 			[disableFutureDates, minDate, maxDate, onChange, dateFormat, locale]
 		);
 
+		// Effect to update the date and input value when the value prop changes
 		React.useEffect(() => {
 			if (value === "" || value === null) {
 				setDate(null);

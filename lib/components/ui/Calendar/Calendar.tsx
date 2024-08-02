@@ -5,11 +5,21 @@ import { DayPicker } from "../../../main";
 import { cn } from "@/utils/utils";
 import { buttonVariants } from "@/main";
 
+/**
+ * Props for the Calendar component.
+ * @property {boolean} [showTime] - Whether to show time selection.
+ * @property {string} [locale] - Locale for the calendar.
+ */
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
 	showTime?: boolean;
 	locale?: string;
 };
 
+/**
+ * Generates class names for the calendar elements.
+ * @param {Object} classNames - Custom class names to override default styles.
+ * @returns {Object} - Object containing class names for various calendar elements.
+ */
 const generateClassNames = (
 	classNames: { [key: string]: string } | undefined
 ) => {
@@ -52,6 +62,12 @@ const generateClassNames = (
 	};
 };
 
+/**
+ * Calendar component.
+ * Renders a calendar with optional time selection and locale support.
+ * @param {CalendarProps} props - Properties for the Calendar component.
+ * @returns {JSX.Element} - JSX element for the calendar.
+ */
 const Calendar: React.FC<CalendarProps> = React.memo(
 	({
 		className,
