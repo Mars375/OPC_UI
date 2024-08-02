@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { Toast, ToastAction } from "./Toast";
 import { Button } from "@/components/ui/Button/Button";
 import { useToast } from "@/utils/use-toast";
-import { Toaster } from "@/main.ts";
+import { Toaster } from "@/main";
 
 /**
  * Meta configuration for the Toast component stories.
