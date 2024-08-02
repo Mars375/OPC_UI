@@ -2,19 +2,16 @@
 "use client";
 import * as React from "react";
 
-import type {
-	ToastActionElement,
-	ToastProps,
-} from "@/components/ui/Toast/Toast";
+import type { ToastAction, Toast } from "@/components/ui/Toast/Toast";
 
 const TOAST_LIMIT = 1; // Maximum number of toasts to display at once
 const TOAST_REMOVE_DELAY = 1000000; // Delay before removing a toast (in milliseconds)
 
-type ToasterToast = ToastProps & {
+type ToasterToast = React.ComponentPropsWithoutRef<typeof Toast> & {
 	id: string;
 	title?: React.ReactNode;
 	description?: React.ReactNode;
-	action?: ToastActionElement;
+	action?: React.ReactElement<typeof ToastAction>;
 };
 
 const actionTypes = {
