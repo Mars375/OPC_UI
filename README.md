@@ -44,8 +44,8 @@ return (
     <Popover />
     <Table />
     <Toaster />
-</div>
-);
+  </div>
+  );
 }
 export default App;
 ```
@@ -211,8 +211,6 @@ or
 ```bash
 yarn build-storybook
 ```
-
-This will generate a static Storybook site in the `storybook-static` directory, which you can then deploy to any static site hosting service.
 
 This will generate a static Storybook site in the `storybook-static` directory, which you can then deploy to any static site hosting service.
 
