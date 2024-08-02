@@ -251,13 +251,13 @@ yarn install
 4. Start the development server:
 
 ```bash
-npm run start
+npm run dev
 ```
 
 or
 
 ```bash
-yarn start
+yarn dev
 ```
 
 5. Open Storybook to develop and test components:
