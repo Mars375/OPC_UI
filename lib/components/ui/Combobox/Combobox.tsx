@@ -82,6 +82,7 @@ const Combobox: React.FC<ComboboxProps> = ({
 						role='combobox'
 						aria-expanded={open}
 						aria-controls={`${id}-listbox`}
+						aria-haspopup='listbox'
 						aria-label={
 							value
 								? options.find((option) => option.value === value)?.label
