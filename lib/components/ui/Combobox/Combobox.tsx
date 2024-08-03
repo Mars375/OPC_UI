@@ -81,6 +81,12 @@ const Combobox: React.FC<ComboboxProps> = ({
 						variant='outline'
 						role='combobox'
 						aria-expanded={open}
+						aria-controls={`${id}-listbox`}
+						aria-label={
+							value
+								? options.find((option) => option.value === value)?.label
+								: "Select Option"
+						}
 						className={cn(
 							"w-full justify-between",
 							!value && "text-muted-foreground"
@@ -97,6 +103,8 @@ const Combobox: React.FC<ComboboxProps> = ({
 				</PopoverTrigger>
 				<PopoverContent
 					className={cn("w-[var(--radix-popover-trigger-width)] p-0")}
+					role='listbox'
+					id={`${id}-listbox`}
 				>
 					<Command>
 						{includeInput && (
@@ -112,6 +120,8 @@ const Combobox: React.FC<ComboboxProps> = ({
 										key={index}
 										value={option.value}
 										onSelect={() => handleSelect(option.value)}
+										role='option'
+										aria-selected={option.value === value}
 									>
 										{option.label}
 									</CommandItem>
