@@ -1,7 +1,19 @@
 {
 	"name": "opc-ui",
-	"version": "0.5.3",
+	"version": "0.5.4",
 	"type": "module",
+	"keywords": [
+		"ui",
+		"react",
+		"component",
+		"library",
+		"design-system",
+		"frontend",
+		"typescript",
+		"storybook",
+		"tailwindcss"
+	],
+	"author": "Loic Rossi",
 	"files": [
 		"dist"
 	],
