@@ -1,5 +1,3 @@
-![OPC React UI Logo](public/HRLogo.webp)
-
 # OPC React UI Library
 
 Welcome to the OPC React UI component library. This library contains various reusable React components for building modern and responsive user interfaces.
